@@ -146,7 +146,7 @@ export default async function createHandler({
             const keysToDelete: string[] = [];
 
             while (true) {
-                const { documents } = await client.ft.search(
+                const documentIds: Array<string> = await client.ft.searchNoContent(
                     getTimeoutRedisCommandOptions(timeoutMs),
                     'idx:tags',
                     `@tag:(${sanitizedTag})`,
@@ -156,7 +156,7 @@ export default async function createHandler({
                     },
                 );
 
-                for (const { id } of documents) {
+                for (const id of documentIds) {
                     keysToDelete.push(id);
                 }
 
